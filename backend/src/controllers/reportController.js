@@ -18,6 +18,21 @@ const createReport = async (req, res) => {
     }
 };
 
-module.exports = {
-    createReport
+const getReports = async (req, res) => {
+    try {
+        const reports = await Report.find();
+
+        res.status(200).json({
+            success: true,
+            reports
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch scam reports",
+            error: error.message
+        });
+    }
 };
+
+module.exports = {createReport,getReports};

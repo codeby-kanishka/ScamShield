@@ -7,12 +7,12 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json());//middleware 
 
 connectDB();
 
 app.use("/api/reports", reportRoutes);
 
-app.listen(process.env.PORT || 5000, () => {
-    console.log(`Server running on port ${process.env.PORT || 5000}`);
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`Server running on port ${process.env.PORT || 3000}`);
 });
