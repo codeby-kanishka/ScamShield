@@ -1,4 +1,5 @@
 const express = require("express");
+const protect = require("../middleware/authMiddleware");
 const { createReport , getReports , updateReport , deleteReport } = require("../controllers/reportController");
 
 const router = express.Router();
@@ -6,9 +7,9 @@ const router = express.Router();
 
 console.log("Report routes loaded");
 
-router.post("/", createReport);
-router.get("/", getReports);
-router.put("/:id", updateReport);
-router.delete("/:id", deleteReport);
+router.post("/", protect,createReport);
+router.get("/", protect,getReports);
+router.put("/:id", protect,updateReport);
+router.delete("/:id",protect, deleteReport);
 
 module.exports = router;
