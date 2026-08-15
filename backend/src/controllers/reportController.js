@@ -2,7 +2,10 @@ const Report = require("../models/Report");
 
 const createReport = async (req, res) => {
     try {
-        const report = await Report.create(req.body);
+        const report = await Report.create({
+    ...req.body,
+    user: req.user.id
+});
 
         res.status(201).json({
             success: true,

@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 
 const reportSchema = new mongoose.Schema(
     {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+        },
+        
         scamType: {
             type: String,
             required: true
