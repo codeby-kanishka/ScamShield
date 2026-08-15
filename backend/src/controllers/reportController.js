@@ -43,7 +43,7 @@ const updateReport = async (req, res) => {
         const report = await Report.findByIdAndUpdate(
             req.params.id,
             req.body,
-            { new: true, runValidators: true }
+            {  returnDocument: "after", runValidators: true }
         );
 
         if (!report) {
@@ -90,4 +90,51 @@ const deleteReport = async (req, res) => {
     }
 };
 
-module.exports = {createReport,getReports,updateReport,deleteReport};
+const getMyReports = async (req, res) => {
+    try {
+        const reports = await Report.find({
+            user: req.user.id
+        });
+
+        res.status(200).json({
+            success: true,
+            reports
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch your reports",
+            error: error.message
+        });
+    }
+};
+const verifyReport = async (req, res) => {
+    try {
+        const report = await Report.findByIdAndUpdate(
+            req.params.id,
+            { status: "Verified" },
+            {  returnDocument: "after", runValidators: true }
+        );
+
+        if (!report) {
+            return res.status(404).json({
+                success: false,
+                message: "Report not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Report verified successfully",
+            report
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to verify report",
+            error: error.message
+        });
+    }
+};
+
+module.exports = {createReport,getReports,updateReport,deleteReport,getMyReports,verifyReport};

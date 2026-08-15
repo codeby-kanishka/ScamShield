@@ -7,7 +7,7 @@ const reportSchema = new mongoose.Schema(
             ref: "User",
             required: true
         },
-        
+
         scamType: {
             type: String,
             required: true
