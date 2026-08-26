@@ -33,7 +33,7 @@ const registerUser = async (req, res) => {
                 role: user.role
             }
         });
-
+        
     } catch (error) {
         res.status(500).json({
             success: false,
