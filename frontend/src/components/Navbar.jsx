@@ -1,7 +1,15 @@
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Navbar() {
+  const navigate = useNavigate()
+  const token = localStorage.getItem('token')
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
+
   return (
     <nav className="border-b border-slate-800 bg-[#070B14]/90 backdrop-blur">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
@@ -40,12 +48,13 @@ function Navbar() {
             Reports
           </Link>
 
-<Link
-  to="/my-reports"
-  className="text-sm text-slate-400 transition hover:text-cyan-400"
->
-  My Reports
-</Link>
+          <Link
+            to="/my-reports"
+            className="text-sm text-slate-400 transition hover:text-cyan-400"
+          >
+            My Reports
+          </Link>
+
           <Link
             to="/intelligence"
             className="text-sm text-slate-400 transition hover:text-cyan-400"
@@ -55,13 +64,22 @@ function Navbar() {
 
         </div>
 
-        {/* Sign In */}
-        <Link
-          to="/login"
-          className="rounded-xl border border-slate-700 px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-cyan-400/50 hover:text-cyan-400"
-        >
-          Sign In
-        </Link>
+        {/* Auth */}
+        {token ? (
+          <button
+            onClick={handleLogout}
+            className="rounded-xl border border-slate-700 px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-red-400/50 hover:text-red-400"
+          >
+            Logout
+          </button>
+        ) : (
+          <Link
+            to="/login"
+            className="rounded-xl border border-slate-700 px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-cyan-400/50 hover:text-cyan-400"
+          >
+            Sign In
+          </Link>
+        )}
 
       </div>
     </nav>
