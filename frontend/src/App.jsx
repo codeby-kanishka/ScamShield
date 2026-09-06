@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard'
 import Reports from './pages/Reports'
 import MyReports from './pages/MyReports'
 import AdminDashboard from './pages/AdminDashboard'
+import ThreatMap from './pages/ThreatMap'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
   <Route path="/reports" element={<Reports />} />
  <Route path="/my-reports" element={<MyReports />} />
  <Route path="/admin" element={<AdminDashboard />} />
+ <Route path="/threat-map" element={<ThreatMap />} />
 </Routes>
       </div>
     </BrowserRouter>
