@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import Reports from './pages/Reports'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
   <Route path="/login" element={<Login />} />
   <Route path="/dashboard" element={<Dashboard />} />
   <Route path="/register" element={<Register />} />
+  <Route path="/reports" element={<Reports />} />
 </Routes>
       </div>
     </BrowserRouter>
