@@ -40,6 +40,12 @@ function Navbar() {
             Reports
           </Link>
 
+<Link
+  to="/my-reports"
+  className="text-sm text-slate-400 transition hover:text-cyan-400"
+>
+  My Reports
+</Link>
           <Link
             to="/intelligence"
             className="text-sm text-slate-400 transition hover:text-cyan-400"
