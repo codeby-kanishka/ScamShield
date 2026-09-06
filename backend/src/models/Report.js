@@ -27,7 +27,23 @@ const reportSchema = new mongoose.Schema(
             type: Number,
             default: 0
         },
+        city: {
+    type: String,
+    trim: true
+},
 
+state: {
+    type: String,
+    trim: true
+},
+
+latitude: {
+    type: Number
+},
+
+longitude: {
+    type: Number
+},
         status: {
             type: String,
             enum: ["Pending", "Verified", "Resolved"],

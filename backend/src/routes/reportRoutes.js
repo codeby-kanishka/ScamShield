@@ -10,7 +10,7 @@ console.log("Report routes loaded");
 
 router.get("/my", protect, getMyReports);
 router.post("/", protect,createReport);
-router.get("/", protect,getReports);
+router.get("/", protect, admin,getReports);
 router.put("/:id", protect,updateReport);
 router.delete("/:id",protect, deleteReport);
 router.put("/:id/verify", protect, admin, verifyReport);

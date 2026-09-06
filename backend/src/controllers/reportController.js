@@ -1,17 +1,48 @@
 const Report = require("../models/Report");
+const { geocodeLocation } = require("../utils/geocode");
 
 const createReport = async (req, res) => {
     try {
+        const {
+            phoneNumber,
+            scamType,
+            city,
+            state,
+            description,
+            amountLost
+        } = req.body;
+
+        let latitude;
+        let longitude;
+
+        // Convert city/state into coordinates
+        if (city && state) {
+            const coordinates = await geocodeLocation(city, state);
+
+            if (coordinates) {
+                latitude = coordinates.latitude;
+                longitude = coordinates.longitude;
+            }
+        }
+
         const report = await Report.create({
-    ...req.body,
-    user: req.user.id
-});
+            phoneNumber,
+            scamType,
+            city,
+            state,
+            latitude,
+            longitude,
+            description,
+            amountLost: Number(amountLost) || 0,
+            user: req.user.id
+        });
 
         res.status(201).json({
             success: true,
             message: "Scam report created successfully",
             report
         });
+
     } catch (error) {
         res.status(500).json({
             success: false,
