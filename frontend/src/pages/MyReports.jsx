@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import api from '../api'
 
 function MyReports() {
   const [reports, setReports] = useState([])
@@ -11,8 +11,8 @@ function MyReports() {
       try {
         const token = localStorage.getItem('token')
 
-        const response = await axios.get(
-          'http://localhost:5000/api/reports/my',
+        const response = await api.get(
+          '/api/reports/my',
           {
             headers: {
               Authorization: `Bearer ${token}`,

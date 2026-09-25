@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from 'axios'
+import api from '../api'
 import { Link,useNavigate } from 'react-router-dom'
 
 function Login() {
@@ -8,38 +8,40 @@ function Login() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+  event.preventDefault()
 
-    try {
-      const response = await axios.post(
-        'http://localhost:5000/api/auth/login',
-        {
-          email,
-          password,
-        }
-      )
+  setError('')
 
-      console.log('Login successful:', response.data)
+  try {
+    const response = await api.post(
+      '/api/auth/login',
+      {
+        email,
+        password,
+      }
+    )
 
-      // Save JWT token
-      localStorage.setItem('token', response.data.token)
+    console.log('Login successful:', response.data)
 
-      setEmail('')
-     setPassword('')
-      // Go to dashboard
-      navigate('/dashboard')
+    localStorage.setItem('token', response.data.token)
 
-    } catch (error) {
+    setEmail('')
+    setPassword('')
 
-      console.error(
-        'Login failed:',
-        error.response?.data?.message || error.message
-      )
+    navigate('/dashboard')
 
-    }
+  } catch (error) {
+
+    setError(
+      error.response?.data?.message ||
+      'Invalid email or password. Please try again.'
+    )
+
   }
+}
 
   return (
     <div className="flex min-h-[calc(100vh-81px)] items-center justify-center px-6">
@@ -100,6 +102,11 @@ function Login() {
 
           </div>
 
+        {error && (
+  <div className="mb-5 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+    {error}
+  </div>
+)}
           <button
             type="submit"
             className="w-full rounded-xl bg-cyan-400 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300"

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import api from '../api'
 import {
   MapContainer,
   TileLayer,
@@ -18,8 +18,8 @@ function ThreatMap() {
       try {
         const token = localStorage.getItem('token')
 
-        const response = await axios.get(
-          'http://localhost:5000/api/intelligence/map',
+        const response = await api.get(
+          'api/intelligence/map',
           {
             headers: {
               Authorization: `Bearer ${token}`,

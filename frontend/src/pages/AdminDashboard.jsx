@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import api from '../api'
 
 function AdminDashboard() {
   const [reports, setReports] = useState([])
@@ -12,8 +12,8 @@ function AdminDashboard() {
     try {
       const token = localStorage.getItem('token')
 
-      const response = await axios.get(
-        'http://localhost:5000/api/reports',
+      const response = await api.get(
+        '/api/reports',
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -44,8 +44,8 @@ function AdminDashboard() {
 
       const token = localStorage.getItem('token')
 
-      await axios.put(
-        `http://localhost:5000/api/reports/${reportId}/verify`,
+      await api.put(
+        `/api/reports/${reportId}/verify`,
         {},
         {
           headers: {

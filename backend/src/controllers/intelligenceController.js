@@ -117,7 +117,91 @@ const getThreatMapData = async (req, res) => {
         });
     }
 };
+
+const getDashboardStats = async (req, res) => {
+    try {
+        const [
+            totalReports,
+            verifiedReports,
+            pendingReports,
+            lossResult,
+            recentReports,
+            categoryStats
+        ] = await Promise.all([
+            Report.countDocuments(),
+
+            Report.countDocuments({
+                status: "Verified"
+            }),
+
+            Report.countDocuments({
+                status: "Pending"
+            }),
+
+            Report.aggregate([
+                {
+                    $group: {
+                        _id: null,
+                        totalLoss: {
+                            $sum: "$amountLost"
+                        }
+                    }
+                }
+            ]),
+
+            Report.find()
+                .sort({ createdAt: -1 })
+                .limit(5)
+                .select("scamType city state status createdAt")
+                .lean(),
+
+            Report.aggregate([
+                {
+                    $group: {
+                        _id: "$scamType",
+                        count: {
+                            $sum: 1
+                        }
+                    }
+                },
+                {
+                    $sort: {
+                        count: -1
+                    }
+                },
+                {
+                    $limit: 6
+                }
+            ])
+        ]);
+
+        res.status(200).json({
+            success: true,
+
+            stats: {
+                totalReports,
+                verifiedReports,
+                pendingReports,
+                totalLoss: lossResult[0]?.totalLoss || 0
+            },
+
+            recentReports,
+
+            categories: categoryStats.map((item) => ({
+                name: item._id,
+                count: item.count
+            }))
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch dashboard statistics"
+        });
+    }
+};
 module.exports = {
     getPhoneIntelligence,
-     getThreatMapData
+    getThreatMapData,
+    getDashboardStats
 };

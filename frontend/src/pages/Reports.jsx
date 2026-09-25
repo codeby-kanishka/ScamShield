@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from 'axios'
+import api from '../api'
 
 function Reports() {
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -24,8 +24,8 @@ function Reports() {
 
       const token = localStorage.getItem('token')
 
-      await axios.post(
-        'http://localhost:5000/api/reports',
+      await api.post(
+        'api/reports',
         {
           phoneNumber,
           scamType,

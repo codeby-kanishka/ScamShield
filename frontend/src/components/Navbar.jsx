@@ -34,12 +34,12 @@ function Navbar() {
         {/* Navigation */}
         <div className="hidden items-center gap-8 md:flex">
 
-          <Link
-            to="/"
-            className="text-sm text-slate-300 transition hover:text-cyan-400"
-          >
-            Dashboard
-          </Link>
+       <Link
+  to="/dashboard"
+  className="text-sm text-slate-300 transition hover:text-cyan-400"
+>
+  Dashboard
+</Link>
 
           <Link
             to="/reports"
@@ -61,13 +61,6 @@ function Navbar() {
 >
   Threat Map
 </Link>
-
-          <Link
-            to="/intelligence"
-            className="text-sm text-slate-400 transition hover:text-cyan-400"
-          >
-            Intelligence
-          </Link>
 
         </div>
 
